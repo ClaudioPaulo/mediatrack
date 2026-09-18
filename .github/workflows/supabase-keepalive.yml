@@ -1,0 +1,34 @@
+name: Supabase keep-alive
+
+# Evita que o projeto Supabase (plano gratuito) seja pausado por inatividade
+# (o Supabase pausa projetos grátis ao fim de 7 dias sem pedidos à API).
+# Este workflow corre a cada 3 dias e faz um único pedido "vazio" (RPC
+# keepalive_ping, ver supabase/schema.sql) — não lê nem escreve dados reais.
+
+on:
+  schedule:
+    - cron: '0 6 */3 * *' # a cada 3 dias, às 06:00 UTC
+  workflow_dispatch: {} # permite correr manualmente em Actions > Run workflow
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase
+        run: |
+          status=$(curl -s -o /tmp/response.txt -w "%{http_code}" \
+            -X POST "${SUPABASE_URL}/rest/v1/rpc/keepalive_ping" \
+            -H "apikey: ${SUPABASE_ANON_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" \
+            -H "Content-Type: application/json")
+
+          echo "HTTP status: $status"
+          cat /tmp/response.txt
+
+          if [ "$status" -ge 400 ]; then
+            echo "::error::Pedido de keep-alive ao Supabase falhou (status $status)."
+            exit 1
+          fi
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
