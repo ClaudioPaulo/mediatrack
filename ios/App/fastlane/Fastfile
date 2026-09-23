@@ -1,0 +1,35 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Compila a app e envia para o TestFlight. Corre no GitHub Actions (macOS)."
+  lane :beta do
+    api_key = app_store_connect_api_key(
+      key_id: ENV["ASC_KEY_ID"],
+      issuer_id: ENV["ASC_ISSUER_ID"],
+      key_content: ENV["ASC_KEY_CONTENT"], # conteúdo do .p8 em base64 — ver secret ASC_KEY_CONTENT
+      is_key_content_base64: true,
+      in_house: false
+    )
+
+    # Número de build único a cada corrida do workflow — a App Store exige que suba sempre.
+    increment_build_number(
+      xcodeproj: "App.xcodeproj",
+      build_number: ENV["GITHUB_RUN_NUMBER"] || Time.now.to_i.to_s
+    )
+
+    # -allowProvisioningUpdates deixa o Xcode criar/atualizar automaticamente
+    # certificados e provisioning profiles usando a API key acima — não
+    # precisamos de gerir certificados manualmente nem do fastlane match.
+    build_app(
+      workspace: "App.xcworkspace",
+      scheme: "App",
+      export_method: "app-store",
+      xcargs: "-allowProvisioningUpdates"
+    )
+
+    upload_to_testflight(
+      api_key: api_key,
+      skip_waiting_for_build_processing: true
+    )
+  end
+end

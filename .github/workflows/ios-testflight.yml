@@ -1,0 +1,54 @@
+name: iOS build & TestFlight upload
+
+# Manual por agora — corre em Actions > "iOS build & TestFlight upload" >
+# Run workflow. Só funciona depois de teres a conta Apple Developer e de
+# teres criado os secrets listados no STORE_SUBMISSION_GUIDE.md (secção 4B).
+# Quando quiseres automatizar (ex.: em cada tag de versão), troca o
+# "workflow_dispatch" abaixo por algo como:
+#   on:
+#     push:
+#       tags: ['ios-v*']
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  build-and-upload:
+    runs-on: macos-14
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Instalar dependências e gerar o build web
+        run: |
+          npm ci
+          npm run mobile:build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          NEXT_PUBLIC_TMDB_ACCESS_TOKEN: ${{ secrets.TMDB_ACCESS_TOKEN }}
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+          working-directory: ios/App
+
+      - name: Instalar CocoaPods
+        working-directory: ios/App
+        run: pod install --repo-update
+
+      - name: Build + upload para o TestFlight (Fastlane)
+        working-directory: ios/App
+        run: bundle exec fastlane beta
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}

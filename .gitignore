@@ -5,3 +5,19 @@ out/
 .env.local
 .DS_Store
 *.log
+
+# Mobile (Capacitor) — nunca comitar chaves de assinatura nem builds
+*.jks
+*.keystore
+*.p12
+*.mobileprovision
+android/app/build/
+android/.gradle/
+android/local.properties
+ios/App/Pods/
+ios/App/build/
+ios/App/DerivedData/
+ios/App/fastlane/report.xml
+ios/App/fastlane/Preview.html
+ios/App/fastlane/screenshots/
+ios/App/fastlane/test_output/

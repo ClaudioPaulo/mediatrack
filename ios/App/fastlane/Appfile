@@ -1,0 +1,3 @@
+app_identifier("com.kaplacc.mediatrack")
+apple_id(ENV["APPLE_ID"]) # e-mail da conta Apple Developer — vem do secret APPLE_ID
+team_id(ENV["APPLE_TEAM_ID"]) # Team ID de developer.apple.com/account → Membership — secret APPLE_TEAM_ID

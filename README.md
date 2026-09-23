@@ -86,7 +86,11 @@ Para "instalar" como app no telemóvel: abre o endereço no Safari (iOS) ou Chro
 
 ## 7. Deploy em produção (opcional)
 
-O caminho mais simples é [Vercel](https://vercel.com):
+Desde a conversão para export estático (necessária para a app mobile), o
+resultado de `npm run build` é a pasta `out/` — HTML/JS/CSS puro, sem
+servidor. Podes alojar em qualquer CDN estática: [Vercel](https://vercel.com)
+continua a funcionar bem (deteta automaticamente o export estático), mas
+também funciona em Netlify, Cloudflare Pages ou GitHub Pages.
 
 ```bash
 npm i -g vercel
@@ -151,7 +155,31 @@ A partir daí corre sozinho — podes confirmar em **Actions** no separador do r
 
 ---
 
-## 10. Notas de produção
+## 10. App mobile (iOS + Android)
+
+O projeto já está preparado como app nativa via [Capacitor](https://capacitorjs.com), reaproveitando todo o código React.
+
+**O que já vem incluído:**
+- Sessão guardada de forma encriptada (Keychain/Keystore), não em `localStorage` simples.
+- Bloqueio por Face ID / impressão digital / PIN ao abrir a app (toggle nas Definições, dentro da app).
+- Modo offline: a biblioteca fica em cache local e continua visível sem internet.
+- Lembretes locais para continuares títulos a meio.
+- Ícone e splash screen de marca já gerados para as duas plataformas.
+
+**Comandos:**
+
+```bash
+npm run mobile:build          # next build (export estático) + cap sync
+npm run mobile:open:android   # abre no Android Studio
+npm run mobile:open:ios       # abre no Xcode (só em macOS)
+npm run mobile:icons          # regenera ícones/splash a partir de assets/icon-source.svg
+```
+
+Para o passo a passo completo de build, assinatura e submissão às lojas, vê **[STORE_SUBMISSION_GUIDE.md](./STORE_SUBMISSION_GUIDE.md)**. O texto pronto para as fichas das lojas (título, descrição, palavras-chave) está em **[STORE_LISTING_COPY.md](./STORE_LISTING_COPY.md)**. A política de privacidade (exigida pelas duas lojas) está em `docs/privacy-policy.html`, pronta a publicar via GitHub Pages. O build de iOS pode correr automaticamente sem Mac via `.github/workflows/ios-testflight.yml` (detalhes na secção 5 do guia de submissão).
+
+---
+
+## 11. Notas de produção
 
 - **RLS**: cada utilizador só acede à sua própria biblioteca e reviews; `media_items` é uma cache partilhada e de leitura para todos os autenticados.
 - **Rate limits**: TMDB e AniList têm limites de pedidos por segundo generosos para uso normal; se escalares para muitos utilizadores simultâneos, considera cache adicional no servidor.

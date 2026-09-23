@@ -1,7 +1,14 @@
-import { redirect } from 'next/navigation';
+'use client';
 
-// O middleware já garante que utilizadores não autenticados nunca chegam aqui
-// sem passar por /login, por isso simplesmente redirecionamos para o dashboard.
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
+// O AuthGate (no layout) trata do redireccionamento para /login quando
+// necessário; aqui só apontamos para o destino "normal".
 export default function RootPage() {
-  redirect('/dashboard');
+  const router = useRouter();
+  useEffect(() => {
+    router.replace('/dashboard');
+  }, [router]);
+  return null;
 }

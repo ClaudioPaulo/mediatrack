@@ -8,6 +8,10 @@ import { SearchBar } from '@/components/SearchBar';
 import { Carousel } from '@/components/Carousel';
 import { MediaCard } from '@/components/MediaCard';
 import { MediaDetailsModal } from '@/components/MediaDetailsModal';
+import { SettingsMenu } from '@/components/SettingsMenu';
+import { OfflineBanner } from '@/components/OfflineBanner';
+import { cacheLibrarySnapshot, getCachedLibrarySnapshot } from '@/lib/mobile/offlineCache';
+import { scheduleContinueReminders } from '@/lib/mobile/notifications';
 import {
   ensureMediaItem,
   getUserLibrary,
@@ -92,9 +96,9 @@ export default function DashboardPage() {
   const undoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const loadLibrary = useCallback(async (userId: string) => {
-    const [rows, reviewsMap] = await Promise.all([getUserLibrary(userId), getUserReviewsMap(userId)]);
-    setLibrary(
-      rows.map((r: any) => ({
+    try {
+      const [rows, reviewsMap] = await Promise.all([getUserLibrary(userId), getUserReviewsMap(userId)]);
+      const mapped: LibraryRow[] = rows.map((r: any) => ({
         mediaItemId: r.media_item_id,
         status: r.status,
         media: rowToMedia(r),
@@ -105,9 +109,27 @@ export default function DashboardPage() {
           currentVolume: r.current_volume ?? undefined,
           currentPage: r.current_page ?? undefined,
         },
-      }))
-    );
-    setRatings(reviewsMap);
+      }));
+      setLibrary(mapped);
+      setRatings(reviewsMap);
+      // Guarda cópia local para acesso offline e agenda lembretes de "continuar a ver/ler"
+      cacheLibrarySnapshot({ library: mapped, ratings: reviewsMap });
+      scheduleContinueReminders(
+        mapped.map((l) => ({ mediaItemId: l.mediaItemId, title: l.media.title, status: l.status }))
+      );
+    } catch (err) {
+      // Falhou o pedido à rede (ex.: sem internet) — tenta mostrar a última cópia guardada
+      const cached = await getCachedLibrarySnapshot<{
+        library: LibraryRow[];
+        ratings: Record<string, number>;
+      }>();
+      if (cached) {
+        setLibrary(cached.data.library);
+        setRatings(cached.data.ratings);
+      } else {
+        throw err;
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -228,10 +250,14 @@ export default function DashboardPage() {
     <main className="mx-auto max-w-5xl px-0 pb-24 pt-6 sm:px-6">
       <header className="mb-6 flex items-center justify-between px-4 sm:px-0">
         <h1 className="text-xl font-bold">MediaTrack</h1>
-        <button onClick={handleSignOut} className="text-sm text-neutral-400 hover:text-neutral-200">
-          Sair
-        </button>
+        <div className="flex items-center gap-2">
+          <SettingsMenu />
+          <button onClick={handleSignOut} className="text-sm text-neutral-400 hover:text-neutral-200">
+            Sair
+          </button>
+        </div>
       </header>
+      <OfflineBanner />
 
       <div className="mb-6 px-4 sm:px-0">
         <SearchBar
