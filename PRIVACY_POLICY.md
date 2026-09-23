@@ -46,7 +46,7 @@ MediaTrack nunca recebe nem guarda dados biométricos.
 ## 6. Os teus direitos
 
 Podes pedir a eliminação da tua conta e de todos os dados associados a
-qualquer momento, contactando [o teu e-mail/contacto de suporte]. Também
+qualquer momento, contactando eng.claudio.paulo@gmail.com. Também
 podes remover itens individuais da tua biblioteca dentro da própria app.
 
 ## 7. Menores de idade
@@ -57,7 +57,7 @@ educação.
 
 ## 8. Contacto
 
-Dúvidas sobre esta política: [o teu e-mail de contacto].
+Dúvidas sobre esta política: eng.claudio.paulo@gmail.com.
 
 ---
 *Nota: substitui os campos entre parênteses retos pelo teu contacto real
