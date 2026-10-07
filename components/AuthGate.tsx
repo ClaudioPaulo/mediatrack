@@ -7,9 +7,9 @@ import { createClient } from '@/lib/supabase/client';
 const PUBLIC_PATHS = ['/login', '/auth/callback'];
 
 /**
- * Substitui o antigo middleware.ts (que exigia servidor Node e por isso é
- * incompatível com export estático / Capacitor). Corre no browser/WebView:
- * verifica a sessão do Supabase e redireciona tal como o middleware fazia.
+ * Replaces the old middleware.ts (which needed a Node server and is therefore
+ * incompatible with static export / Capacitor). Runs in the browser/WebView:
+ * checks the Supabase session and redirects just like the middleware did.
  */
 export function AuthGate({ children }: { children: React.ReactNode }) {
   const router = useRouter();

@@ -5,10 +5,10 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
 /**
- * Fallback para quem clica no link mágico do e-mail em vez de digitar o
- * código de 6 dígitos. Troca o `code` da URL por uma sessão — tudo no
- * browser/WebView, sem depender de um servidor (necessário para o export
- * estático usado pela app nativa).
+ * Fallback for users who click the magic link in the email instead of typing the
+ * 6-digit code. Exchanges the URL `code` for a session, entirely in the
+ * browser/WebView with no server (required for the static export
+ * used by the native app).
  */
 export default function AuthCallbackPage() {
   const router = useRouter();

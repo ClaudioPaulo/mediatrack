@@ -4,7 +4,7 @@ import { Capacitor } from '@capacitor/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
 
 interface ReminderItem {
-  id: number; // precisa de ser um inteiro estável — usamos um hash do mediaItemId
+  id: number; // must be a stable integer: we use a hash of mediaItemId
   title: string;
 }
 
@@ -18,9 +18,9 @@ function hashToInt(str: string): number {
 }
 
 /**
- * Agenda lembretes locais (não precisam de servidor push) para itens que
- * estão "A ver/ler" — um por item, daqui a 3 dias, para incentivar a
- * continuar. Reagendar substitui sempre os anteriores (mesmo id).
+ * Schedules local reminders (no push server needed) for items that
+ * are "Watching/Reading": one per item, 3 days from now, to encourage
+ * continuing. Rescheduling always replaces the previous ones (same id).
  */
 export async function scheduleContinueReminders(
   items: Array<{ mediaItemId: string; title: string; status: string }>

@@ -26,8 +26,8 @@ interface TmdbResult {
 }
 
 /**
- * Pesquisa filmes e séries/doramas em simultâneo (multi-search).
- * Doramas são identificados heuristicamente: tv + origin_country coreano/asiático.
+ * Searches movies and series/dramas at once (multi-search).
+ * Dramas are identified heuristically: tv + Korean/Asian origin_country.
  */
 export async function searchTmdb(query: string): Promise<NormalizedMedia[]> {
   if (!query.trim()) return [];
@@ -70,7 +70,7 @@ function normalizeTmdbItem(r: TmdbResult): NormalizedMedia {
   };
 }
 
-/** Detalhes completos de um filme ou série TMDB (usado no modal de detalhes) */
+/** Full details of a TMDB movie or series (used in the details modal) */
 export async function getTmdbDetails(id: string, mediaType: 'movie' | 'tv') {
   const res = await fetch(`${TMDB_BASE}/${mediaType}/${id}?language=pt-PT`, {
     headers: tmdbHeaders(),

@@ -5,9 +5,9 @@ import { Preferences } from '@capacitor/preferences';
 const CACHE_KEY = 'library-snapshot-v1';
 
 /**
- * Guarda uma cópia local da biblioteca (JSON) para continuar visível sem
- * internet — ex.: em viagem/férias. Só leitura offline; ações (marcar
- * progresso, etc.) continuam a exigir ligação, porque escrevem no Supabase.
+ * Saves a local copy of the library (JSON) so it stays visible without
+ * internet, e.g. while traveling. Read-only offline; actions (marking
+ * progress, etc.) still need a connection because they write to Supabase.
  */
 export async function cacheLibrarySnapshot(data: unknown): Promise<void> {
   try {
@@ -16,7 +16,7 @@ export async function cacheLibrarySnapshot(data: unknown): Promise<void> {
       value: JSON.stringify({ data, cachedAt: Date.now() }),
     });
   } catch {
-    // armazenamento indisponível — não é crítico, ignora
+    // storage unavailable: not critical, ignore
   }
 }
 

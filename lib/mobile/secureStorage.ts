@@ -4,14 +4,14 @@ import { Capacitor } from '@capacitor/core';
 import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
 
 /**
- * Storage do Supabase para a sessão (JWT + refresh token).
+ * Supabase storage adapter for the session (JWT + refresh token).
  *
- * - Na app nativa (iOS/Android): guarda no Keychain / Keystore via
- *   capacitor-secure-storage-plugin — encriptado pelo próprio SO, não é
- *   acessível a outras apps nem visível se o telefone for comprometido por
- *   apps sem privilégio elevado.
- * - No browser (web): usa localStorage normal, tal como o Supabase faz por
- *   omissão (o Keychain nativo não existe no browser).
+ * - In the native app (iOS/Android): stored in the Keychain / Keystore via
+ *   capacitor-secure-storage-plugin, encrypted by the OS itself, and not
+ *   accessible to other apps or exposed if the phone is compromised by
+ *   apps without elevated privileges.
+ * - In the browser (web): uses plain localStorage, as Supabase does by
+ *   default (the native Keychain does not exist in the browser).
  */
 export const secureStorage = {
   async getItem(key: string): Promise<string | null> {
@@ -38,7 +38,7 @@ export const secureStorage = {
     try {
       await SecureStoragePlugin.remove({ key });
     } catch {
-      // já não existia
+      // it no longer existed
     }
   },
 };

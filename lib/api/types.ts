@@ -2,9 +2,9 @@ export type MediaCategory = 'book' | 'manga' | 'anime' | 'tv_series' | 'drama' |
 export type MediaSource = 'tmdb' | 'anilist' | 'openlibrary';
 
 /**
- * Estrutura única de mídia usada em todo o UI, independente da API de origem.
- * Cada fetcher (tmdb.ts, anilist.ts, openLibrary.ts) converte a resposta bruta
- * da sua API para este formato.
+ * Single media structure used across the UI, independent of the source API.
+ * Each fetcher (tmdb.ts, anilist.ts, openLibrary.ts) converts the raw response
+ * from its API into this format.
  */
 export interface NormalizedMedia {
   externalId: string;

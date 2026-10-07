@@ -43,7 +43,7 @@ async function queryAniList(search: string, type: 'ANIME' | 'MANGA'): Promise<An
   return json.data?.Page?.media ?? [];
 }
 
-/** Pesquisa anime e manga em paralelo na AniList */
+/** Searches anime and manga in parallel on AniList */
 export async function searchAniList(query: string): Promise<NormalizedMedia[]> {
   if (!query.trim()) return [];
 

@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Export estático puro (sem servidor Node): necessário para embrulhar a app
-  // em Capacitor (iOS/Android) e permite alojar o resultado em qualquer CDN
-  // estática. Nada aqui usa Server Components/Route Handlers dinâmicos.
+  // Pure static export (no Node server): required to wrap the app
+  // in Capacitor (iOS/Android), and lets you host the result on any static
+  // CDN. Nothing here uses dynamic Server Components/Route Handlers.
   output: 'export',
   images: {
-    // A otimização de imagem da Vercel não existe em export estático nem no
-    // Capacitor; os componentes <Image> já usam domínios https normais.
+    // Vercel image optimization does not exist in static export or in
+    // Capacitor; the <Image> components already use normal https domains.
     unoptimized: true,
   },
 };

@@ -4,9 +4,9 @@ import { searchOpenLibrary } from './openLibrary';
 import type { NormalizedMedia } from './types';
 
 /**
- * Pesquisa unificada: dispara as 3 APIs em paralelo e devolve um único array
- * normalizado, já pronto a mapear para <MediaCard />. Falhas individuais de
- * uma API não derrubam as outras (Promise.allSettled).
+ * Unified search: calls the 3 APIs in parallel and returns a single
+ * normalized array, ready to map to <MediaCard />. A failure in one
+ * API does not take down the others (Promise.allSettled).
  */
 export async function searchAllSources(query: string): Promise<NormalizedMedia[]> {
   const trimmed = query.trim();
@@ -24,7 +24,7 @@ export async function searchAllSources(query: string): Promise<NormalizedMedia[]
     else console.error('Falha numa fonte de pesquisa:', r.reason);
   }
 
-  // Ordena por relevância aproximada: título mais próximo da query primeiro
+  // Sort by approximate relevance: closest title match to the query first
   const lowerQuery = trimmed.toLowerCase();
   merged.sort((a, b) => {
     const aExact = a.title.toLowerCase() === lowerQuery ? 0 : 1;

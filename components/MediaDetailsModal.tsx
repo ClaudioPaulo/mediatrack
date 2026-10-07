@@ -90,8 +90,8 @@ export function MediaDetailsModal({ media, userId, initialStatus, onClose, onSav
           setPage(entry.current_page?.toString() ?? '');
         }
 
-        // Busca totais de temporadas/episódios à TMDB uma única vez, e guarda em cache
-        // no media_items para não repetir o pedido nas próximas aberturas.
+        // Fetch season/episode totals from TMDB only once and cache them
+        // in media_items so the request is not repeated on later opens.
         const isTvLike = media.category === 'tv_series' || media.category === 'drama';
         if (media.source === 'tmdb' && isTvLike && !media.totalEpisodes) {
           const tmdbType = (media.extra?.tmdbMediaType as 'tv' | 'movie') ?? 'tv';
@@ -134,7 +134,7 @@ export function MediaDetailsModal({ media, userId, initialStatus, onClose, onSav
     };
   }
 
-  /** Verifica se o progresso atual já atingiu o total conhecido para a categoria em questão */
+  /** Checks whether the current progress has reached the known total for the category */
   function reachedTotal(): boolean {
     if ((category === 'tv_series' || category === 'drama' || category === 'anime') && totalEpisodes) {
       const ep = toIntOrUndefined(episode);
@@ -151,9 +151,9 @@ export function MediaDetailsModal({ media, userId, initialStatus, onClose, onSav
     return false;
   }
 
-  // Passa automaticamente para "Concluído" quando o progresso atinge o total conhecido
-  // (episódios/capítulos/páginas). Não mexe se já estiver "Concluído" ou "Favorito",
-  // para não perder uma marcação manual do utilizador.
+  // Automatically moves to "Completed" when progress reaches the known total
+  // (episodes/chapters/pages). Leaves it alone if already "Completed" or "Favorite",
+  // so a manual choice by the user is not lost.
   useEffect(() => {
     if (loading) return;
     if (status === 'completed' || status === 'favorite') return;

@@ -7,10 +7,10 @@ import { Preferences } from '@capacitor/preferences';
 
 const LOCK_ENABLED_KEY = 'app-lock-enabled';
 
-/** Lê a preferência guardada (por omissão: ativo, se o dispositivo suportar). */
+/** Reads the saved preference (default: enabled, if the device supports it). */
 export async function isAppLockEnabled(): Promise<boolean> {
   const { value } = await Preferences.get({ key: LOCK_ENABLED_KEY });
-  return value !== 'false'; // ativo por omissão
+  return value !== 'false'; // enabled by default
 }
 
 export async function setAppLockEnabled(enabled: boolean): Promise<void> {
@@ -18,9 +18,9 @@ export async function setAppLockEnabled(enabled: boolean): Promise<void> {
 }
 
 /**
- * Bloqueia o conteúdo da app atrás de Face ID / impressão digital / PIN do
- * dispositivo sempre que a app abre ou volta do fundo. Só atua em nativo —
- * no browser não faz nada (não há biometria de SO a proteger).
+ * Locks the app content behind Face ID / fingerprint / the device PIN
+ * whenever the app opens or returns from the background. Only acts on native:
+ * in the browser it does nothing (there is no OS biometrics to protect).
  */
 export function AppLockGate({ children }: { children: React.ReactNode }) {
   const [locked, setLocked] = useState(false);
@@ -34,7 +34,7 @@ export function AppLockGate({ children }: { children: React.ReactNode }) {
       await BiometricAuth.authenticate({
         reason: 'Desbloqueia o MediaTrack',
         cancelTitle: 'Cancelar',
-        allowDeviceCredential: true, // permite PIN/padrão como alternativa
+        allowDeviceCredential: true, // allows PIN/pattern as a fallback
         iosFallbackTitle: 'Usar código do iPhone',
         androidTitle: 'MediaTrack bloqueado',
         androidSubtitle: 'Confirma a tua identidade para continuar',
@@ -63,7 +63,7 @@ export function AppLockGate({ children }: { children: React.ReactNode }) {
       await tryUnlock();
     })();
 
-    // Volta a bloquear quando a app volta do fundo
+    // Lock again when the app returns from the background
     let sub: { remove: () => void } | undefined;
     import('@capacitor/app').then(({ App }) => {
       App.addListener('appStateChange', async ({ isActive }) => {

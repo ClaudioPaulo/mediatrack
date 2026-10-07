@@ -3,10 +3,10 @@
 import { createBrowserClient } from '@supabase/ssr';
 import { secureStorage } from '@/lib/mobile/secureStorage';
 
-// Cliente Supabase para uso no browser (Client Components) e na app nativa.
-// As variáveis vêm de .env.local — ver README.md.
-// A sessão é guardada via secureStorage: Keychain/Keystore na app nativa,
-// localStorage no browser.
+// Supabase client for the browser (Client Components) and the native app.
+// The variables come from .env.local. See README.md.
+// The session is stored via secureStorage: Keychain/Keystore in the native app,
+// localStorage in the browser.
 export function createClient() {
   return createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

@@ -13,7 +13,7 @@ interface OpenLibraryDoc {
   number_of_pages_median?: number;
 }
 
-/** Pesquisa livros no Open Library (sem necessidade de API key) */
+/** Searches books on Open Library (no API key required) */
 export async function searchOpenLibrary(query: string): Promise<NormalizedMedia[]> {
   if (!query.trim()) return [];
 

@@ -1,6 +1,9 @@
 {
   "name": "mediatrack",
   "version": "1.0.0",
+  "description": "Track movies, TV, dramas, anime, manga and books in one place. Next.js, Supabase and Capacitor.",
+  "license": "MIT",
+  "author": "Claudio Paulo",
   "private": true,
   "scripts": {
     "dev": "next dev",

@@ -14,7 +14,7 @@ export function SettingsMenu() {
     isAppLockEnabled().then(setLockEnabled);
   }, [native]);
 
-  if (!native) return null; // no browser não há nada de nativo para configurar
+  if (!native) return null; // in the browser there is nothing native to configure
 
   async function toggleLock() {
     const next = !lockEnabled;

@@ -3,8 +3,8 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-// O AuthGate (no layout) trata do redireccionamento para /login quando
-// necessário; aqui só apontamos para o destino "normal".
+// AuthGate (in the layout) handles redirecting to /login when
+// needed; here we only point to the "normal" destination.
 export default function RootPage() {
   const router = useRouter();
   useEffect(() => {

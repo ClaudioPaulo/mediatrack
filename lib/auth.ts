@@ -3,12 +3,12 @@
 import { createClient } from '@/lib/supabase/client';
 
 /**
- * Envia um código OTP de 6 dígitos (e também um magic link, no mesmo e-mail)
- * para o endereço indicado. O utilizador pode clicar no link OU digitar o código.
+ * Sends a 6-digit OTP code (and also a magic link, in the same email)
+ * to the given address. The user can click the link OR type the code.
  *
- * Nota: a duração da sessão (30 dias) é configurada no painel do Supabase em
- * Authentication → Settings → "JWT expiry" / "Refresh token expiry" — não é
- * um parâmetro passado aqui. Ver README.md para o valor a configurar.
+ * Note: the session length (30 days) is configured in the Supabase dashboard under
+ * Authentication → Settings → "JWT expiry" / "Refresh token expiry". It is not
+ * a parameter passed here. See README.md for the value to set.
  */
 export async function sendOtp(email: string) {
   const supabase = createClient();
@@ -23,10 +23,10 @@ export async function sendOtp(email: string) {
 }
 
 /**
- * Confirma o código OTP de 6 dígitos introduzido pelo utilizador.
- * Ao ter sucesso, o Supabase cria uma sessão persistente (cookies httpOnly,
- * geridos automaticamente pelo @supabase/ssr) válida durante o período
- * configurado no painel (recomendado: 30 dias).
+ * Confirms the 6-digit OTP code entered by the user.
+ * On success, Supabase creates a persistent session (stored via
+ * secureStorage, see lib/supabase/client.ts) valid for the period
+ * configured in the dashboard (recommended: 30 days).
  */
 export async function verifyOtp(email: string, token: string) {
   const supabase = createClient();

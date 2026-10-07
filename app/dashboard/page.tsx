@@ -24,7 +24,7 @@ import {
 import type { MediaCategory, NormalizedMedia } from '@/lib/api/types';
 import type { User } from '@supabase/supabase-js';
 
-// Converte uma linha da tabela user_library (com join em media_items) para NormalizedMedia
+// Converts a user_library row (joined with media_items) into NormalizedMedia
 function rowToMedia(row: any): NormalizedMedia {
   const m = row.media_items;
   return {
@@ -112,13 +112,13 @@ export default function DashboardPage() {
       }));
       setLibrary(mapped);
       setRatings(reviewsMap);
-      // Guarda cópia local para acesso offline e agenda lembretes de "continuar a ver/ler"
+      // Save a local copy for offline access and schedule "keep watching/reading" reminders
       cacheLibrarySnapshot({ library: mapped, ratings: reviewsMap });
       scheduleContinueReminders(
         mapped.map((l) => ({ mediaItemId: l.mediaItemId, title: l.media.title, status: l.status }))
       );
     } catch (err) {
-      // Falhou o pedido à rede (ex.: sem internet) — tenta mostrar a última cópia guardada
+      // Network request failed (e.g. no internet): try to show the last saved copy
       const cached = await getCachedLibrarySnapshot<{
         library: LibraryRow[];
         ratings: Record<string, number>;
@@ -226,7 +226,7 @@ export default function DashboardPage() {
   const backlog = filteredLibrary.filter((l) => l.status === 'backlog');
   const favorites = filteredLibrary.filter((l) => l.status === 'favorite');
 
-  // Recomendações simples: géneros mais frequentes entre os itens completos/favoritos (sobre a biblioteca toda, não filtrada)
+  // Simple recommendations: most frequent genres among completed/favorite items (over the whole library, not the filtered view)
   const favoriteGenres = Array.from(
     new Set(
       library

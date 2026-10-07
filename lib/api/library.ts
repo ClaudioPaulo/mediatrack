@@ -2,8 +2,8 @@ import { createClient } from '@/lib/supabase/client';
 import type { NormalizedMedia } from './types';
 
 /**
- * Garante que o item de mídia existe na cache local (media_items) e devolve
- * o seu id interno (uuid). Usa upsert por (source, external_id).
+ * Ensures the media item exists in the local cache (media_items) and returns
+ * its internal id (uuid). Uses upsert on (source, external_id).
  */
 export async function ensureMediaItem(media: NormalizedMedia): Promise<string> {
   const supabase = createClient();
@@ -45,7 +45,7 @@ export interface LibraryProgress {
   currentPage?: number;
 }
 
-/** Adiciona ou atualiza o estado (e opcionalmente o progresso) de um item na biblioteca do utilizador atual */
+/** Adds or updates the status (and optionally the progress) of an item in the current user's library */
 export async function upsertLibraryEntry(
   userId: string,
   mediaItemId: string,
@@ -71,7 +71,7 @@ export async function upsertLibraryEntry(
   if (error) throw error;
 }
 
-/** Devolve a entrada de biblioteca (com progresso) de um item específico, ou null se não existir */
+/** Returns the library entry (with progress) for a specific item, or null if it does not exist */
 export async function getLibraryEntry(userId: string, mediaItemId: string) {
   const supabase = createClient();
   const { data, error } = await supabase
@@ -94,7 +94,7 @@ export async function removeLibraryEntry(userId: string, mediaItemId: string) {
   if (error) throw error;
 }
 
-/** Biblioteca completa do utilizador, com o item de mídia associado (join) */
+/** The user's full library, with the associated media item (join) */
 export async function getUserLibrary(userId: string, status?: LibraryStatus) {
   const supabase = createClient();
   let query = supabase
@@ -110,7 +110,7 @@ export async function getUserLibrary(userId: string, status?: LibraryStatus) {
   return data;
 }
 
-/** Corrige a categoria de um item de mídia (ex. dorama classificado como série) */
+/** Fixes the category of a media item (e.g. a drama classified as a series) */
 export async function updateMediaItemCategory(mediaItemId: string, category: string) {
   const supabase = createClient();
   const { error } = await supabase
@@ -120,7 +120,7 @@ export async function updateMediaItemCategory(mediaItemId: string, category: str
   if (error) throw error;
 }
 
-/** Guarda totais (episódios/temporadas) obtidos da API de origem, para não repetir o pedido */
+/** Stores totals (episodes/seasons) obtained from the source API, so the request is not repeated */
 export async function updateMediaItemDetails(
   mediaItemId: string,
   details: { totalEpisodes?: number; extra?: Record<string, unknown> }
@@ -136,7 +136,7 @@ export async function updateMediaItemDetails(
   if (error) throw error;
 }
 
-/** Todas as avaliações do utilizador, num mapa media_item_id -> rating (para uso em listas, sem 1 pedido por item) */
+/** All of the user's ratings, as a media_item_id -> rating map (for lists, avoiding one request per item) */
 export async function getUserReviewsMap(userId: string): Promise<Record<string, number>> {
   const supabase = createClient();
   const { data, error } = await supabase
@@ -152,7 +152,7 @@ export async function getUserReviewsMap(userId: string): Promise<Record<string, 
   return map;
 }
 
-/** Cria ou atualiza rating (1-5) e notas para um item */
+/** Creates or updates the rating (1-5) and notes for an item */
 export async function upsertReview(
   userId: string,
   mediaItemId: string,

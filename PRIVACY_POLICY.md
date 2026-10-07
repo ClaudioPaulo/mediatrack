@@ -1,66 +1,42 @@
-# Política de Privacidade — MediaTrack
+**English** | [Português](PRIVACY_POLICY.pt-PT.md)
 
-**Última atualização:** 23 de setembro de 2026
+# Privacy Policy: MediaTrack
 
-Esta política descreve que dados o MediaTrack recolhe e como são usados. O
-MediaTrack é uma app pessoal/familiar de acompanhamento de filmes, séries,
-animes, mangas e livros.
+**Last updated:** September 23, 2026
 
-## 1. Dados que recolhemos
+This policy describes what data MediaTrack collects and how it is used. MediaTrack is a personal/family app for tracking movies, series, anime, manga and books.
 
-- **E-mail**, para criar a tua conta e enviar o código de acesso (login sem
-  password).
-- **Biblioteca pessoal**: os títulos que adicionas, o estado (a ver, concluído,
-  favorito, etc.), progresso (episódio/capítulo/página) e as tuas
-  classificações/reviews.
+## 1. Data we collect
 
-Não recolhemos localização, contactos, fotos, nem dados de pagamento — a app
-não tem compras nem anúncios.
+- **Email address**, to create your account and send you the sign-in code (passwordless login).
+- **Personal library**: the titles you add, their status (watching, completed, favorite, etc.), progress (episode/chapter/page) and your ratings and reviews.
 
-## 2. Como usamos os dados
+We do not collect location, contacts, photos or payment data. The app has no purchases and no ads.
 
-Exclusivamente para: autenticar-te, guardar e mostrar a tua biblioteca entre
-dispositivos, e (se ativares) enviar-te lembretes locais no teu próprio
-telefone para continuares um título a meio. Não vendemos nem partilhamos
-dados com terceiros para publicidade.
+## 2. How we use the data
 
-## 3. Onde os dados ficam guardados
+Only to authenticate you, to store and show your library across devices, and (if you enable it) to send you local reminders on your own phone to continue a title you left halfway. We do not sell or share data with third parties for advertising.
 
-Numa base de dados Supabase (PostgreSQL), protegida por Row Level Security —
-cada conta só acede aos seus próprios dados. A sessão de acesso é guardada de
-forma encriptada no dispositivo (Keychain no iOS / Keystore no Android).
+## 3. Where the data is stored
 
-## 4. Serviços de terceiros usados para procurar conteúdos
+In a Supabase (PostgreSQL) database protected by Row Level Security: each account can only access its own data. The sign-in session is stored encrypted on the device (Keychain on iOS, Keystore on Android).
 
-Ao pesquisares um título, a app consulta APIs públicas de catálogo — TMDB
-(filmes/séries), AniList (anime/manga) e Open Library (livros) — apenas para
-obter informação pública sobre esse título (título, sinopse, capa). Estas
-pesquisas não enviam a tua identidade a esses serviços.
+## 4. Third-party services used to look up titles
 
-## 5. Bloqueio por biometria
+When you search for a title, the app queries public catalog APIs (TMDB for movies and series, AniList for anime and manga, and Open Library for books) only to get public information about that title (name, synopsis, cover). These searches do not send your identity to those services.
 
-Se ativares o bloqueio por Face ID / impressão digital / PIN, essa
-verificação é feita inteiramente pelo sistema operativo do teu telemóvel — a
-MediaTrack nunca recebe nem guarda dados biométricos.
+## 5. Biometric lock
 
-## 6. Os teus direitos
+If you enable the Face ID / fingerprint / PIN lock, the check is done entirely by your phone's operating system. MediaTrack never receives or stores biometric data.
 
-Podes pedir a eliminação da tua conta e de todos os dados associados a
-qualquer momento, contactando eng.claudio.paulo@gmail.com. Também
-podes remover itens individuais da tua biblioteca dentro da própria app.
+## 6. Your rights
 
-## 7. Menores de idade
+You can ask for your account and all associated data to be deleted at any time by contacting eng.claudio.paulo@gmail.com. You can also remove individual items from your library inside the app.
 
-O MediaTrack não é direcionado a crianças menores de 13 anos e não recolhe
-intencionalmente dados de menores sem consentimento dos pais/encarregados de
-educação.
+## 7. Children
 
-## 8. Contacto
+MediaTrack is not directed at children under 13 and does not knowingly collect data from minors without the consent of a parent or guardian.
 
-Dúvidas sobre esta política: eng.claudio.paulo@gmail.com.
+## 8. Contact
 
----
-*Nota: substitui os campos entre parênteses retos pelo teu contacto real
-antes de publicar esta página. As lojas exigem um URL público e ativo para
-esta política — ver o guia de submissão para como a publicar gratuitamente
-no GitHub Pages.*
+Questions about this policy: eng.claudio.paulo@gmail.com.

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-/** Devolve `value` apenas depois de `delayMs` sem alterações — usado para debouncing de pesquisa */
+/** Returns `value` only after `delayMs` without changes. Used to debounce search */
 export function useDebounce<T>(value: T, delayMs = 400): T {
   const [debounced, setDebounced] = useState(value);
 
