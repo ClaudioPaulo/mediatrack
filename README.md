@@ -4,7 +4,21 @@
 
 Track movies, TV series, K-dramas, anime, manga and books in one place. MediaTrack combines three public catalogues into a single search, keeps a personal library by status, and runs as a responsive web app, an installable PWA, and a native iOS/Android app.
 
-<!-- Add 2-3 screenshots here: ![Dashboard](docs/screenshots/dashboard.png) -->
+## Screenshots
+
+The app interface is in European Portuguese.
+
+| Dashboard | Search across all catalogues |
+| --- | --- |
+| ![Dashboard with the titles currently being watched or read](docs/screenshots/dashboard.webp) | ![Unified search results for "one piece" mixing drama, series, anime, manga and film](docs/screenshots/search.webp) |
+
+| Library: favorites and backlog | Library: completed and recommendations |
+| --- | --- |
+| ![Library sections for favorites and titles to watch or read](docs/screenshots/library.webp) | ![Completed titles and recommendations based on favorite genres](docs/screenshots/library2.webp) |
+
+| Passwordless sign-in | Enter the 6-digit code |
+| --- | --- |
+| ![Sign-in screen asking for an email address](docs/screenshots/login.webp) | ![Screen asking for the 6-digit code sent by email](docs/screenshots/login-verification.webp) |
 
 ## Features
 
